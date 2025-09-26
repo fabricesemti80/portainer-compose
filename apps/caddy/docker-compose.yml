@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  caddy:
+    image: caddy:2
+    container_name: caddy
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: unless-stopped
+    environment:
+      - CADDY_DOMAIN=${CADDY_DOMAIN}
+    volumes:
+      - ./caddy-data:/data
+      - ./caddy-config:/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - portainer-apps
+    # Auto-discovery configuration via labels
+    labels:
+      caddy: "${CADDY_DOMAIN}"
+      caddy.reverse_proxy: "{{upstreams 80}}"
+
+networks:
+  portainer-apps:
+    external: true

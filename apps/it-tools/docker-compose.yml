@@ -1,11 +1,12 @@
-version: '3.8'
-
 services:
   it-tools:
     image: corentinth/it-tools:latest
+    labels:
+      caddy: "tools.fs-tech.uk"  # Caddy reverse proxy domain
+      caddy.reverse_proxy: "{{upstreams 80}}"  # Route to internal container port 80
     container_name: it-tools
     ports:
-      - "1111:80"
+      - "1111:80"  # External:1111 → Internal:80 (it-tools web interface)
     restart: unless-stopped
     environment:
       - PUID=1000

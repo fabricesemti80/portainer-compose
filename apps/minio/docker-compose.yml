@@ -3,10 +3,13 @@ version: '3.8'
 services:
   minio:
     image: minio/minio:latest
+    labels:
+      caddy: "minio.fs-tech.uk"  # Caddy reverse proxy domain
+      caddy.reverse_proxy: "{{upstreams 9001}}"  # Route to internal container port 9001
     container_name: minio
     ports:
-      - "9000:9000"
-      - "10001:9001"
+      - "10001:9001" # External:10001 → Internal:9001 (MinIO Console - exposed via Caddy)
+      - "9000:9000"  # External:9000 → Internal:9000 (MinIO S3 API)
     restart: unless-stopped
     environment:
       - MINIO_ROOT_USER=${MINIO_ROOT_USER}
