@@ -3,11 +3,6 @@ version: '3.8'
 services:
   minio:
     image: minio/minio:latest
-    labels:
-      caddy: "minio.fs-tech.uk"  # Caddy reverse proxy domain for MinIO Console
-      caddy.reverse_proxy: "{{upstreams 9001}}"  # Route to internal container port 9001
-      caddy_1: "api.fs-tech.uk"  # Domain for MinIO S3 API
-      caddy_1.reverse_proxy: "{{upstreams 9000}}"
     container_name: minio
     ports:
       - "10001:9001" # External:10001 → Internal:9001 (MinIO Console - exposed via Caddy)
@@ -16,8 +11,10 @@ services:
     environment:
       - MINIO_ROOT_USER=${MINIO_ROOT_USER}
       - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
     volumes:
-      - /minio-s3:/data
+      - ${MINIO_DATA_PATH:-/minio-s3}:/data
     command: server /data --console-address ":9001"
     networks:
       - portainer-apps
