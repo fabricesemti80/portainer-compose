@@ -12,9 +12,9 @@ services:
       - PGID=1000
     volumes:
       - ./data:/app/data
-    networks:
-      - portainer-apps
+#     networks:
+#       - portainer-apps
 
-networks:
-  portainer-apps:
-    external: true
+# networks:
+#   portainer-apps:
+#     external: true
