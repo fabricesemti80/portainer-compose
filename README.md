@@ -19,8 +19,8 @@ portainer-compose/
 A collection of useful IT tools in a web interface.
 
 - **Image**: `corentinth/it-tools:latest`
-- **Port**: 8080
-- **Access**: http://your-server:8080
+- **Port**: 10080
+- **Access**: http://your-server:10080
 
 ## Prerequisites
 
@@ -122,7 +122,7 @@ This network will be reused across all your application stacks for inter-contain
 
 Copy `apps/it-tools/.env.example` to `apps/it-tools/.env` and customize:
 
-- `PORT`: Port to expose the service (default: 8080)
+- `PORT`: Port to expose the service (default: 10080)
 - `PUID/PGID`: User/Group IDs for file permissions
 - `DATA_PATH`: Path for persistent data
 

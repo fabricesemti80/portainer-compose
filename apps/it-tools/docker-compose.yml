@@ -5,7 +5,7 @@ services:
     image: corentinth/it-tools:latest
     container_name: it-tools
     ports:
-      - "8080:80"
+      - "10080:80"
     restart: unless-stopped
     environment:
       - PUID=1000
