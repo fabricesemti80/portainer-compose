@@ -14,13 +14,9 @@ services:
     volumes:
       - ./caddy-data:/data
       - ./caddy-config:/config
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./Caddyfile:/etc/caddy/Caddyfile
     networks:
       - portainer-apps
-    # Auto-discovery configuration via labels
-    labels:
-      caddy: "${CADDY_DOMAIN}"
-      caddy.reverse_proxy: "{{upstreams 80}}"
 
 networks:
   portainer-apps:
