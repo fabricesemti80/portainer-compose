@@ -10,6 +10,7 @@ services:
     restart: unless-stopped
     environment:
       - CADDY_DOMAIN=${CADDY_DOMAIN}
+      - CADDY_TLS_INTERNAL=${CADDY_TLS_INTERNAL:-1}
     volumes:
       - ./caddy-data:/data
       - ./caddy-config:/config
