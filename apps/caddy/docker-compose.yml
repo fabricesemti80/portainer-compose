@@ -17,8 +17,6 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - ./caddy-data:/data
       - ./caddy-config:/config
-    env_file:
-      - .env
     networks:
       - portainer-apps
 
