@@ -63,19 +63,29 @@ A collection of useful IT tools in a web interface.
 - **Polling Interval**: Set to desired interval (e.g., 5 minutes)
 - Click **"Create repository"**
 
-### Step 5: Deploy IT Tools Stack
+### Step 5: Create Shared Docker Network
+
+Create a shared Docker network that all your application stacks will use:
+
+1. Go to **Networks** in Portainer
+2. Click **"Add network"**
+3. **Name**: portainer-apps
+4. **Driver**: bridge
+5. Click **"Create network"**
+
+This network will be reused across all your application stacks for inter-container communication.
+
+### Step 6: Deploy IT Tools Stack
 
 #### Option A: Using Git Repository Browser
 
-1. Go to **Stacks** in Portainer
-2. Click **"Add stack"**
-3. Select **"Repository"** as the method
-4. Choose your connected repository
-5. **Repository reference**: main (or your branch)
-6. **Compose path**: `apps/it-tools/docker-compose.yml`
-7. **Stack name**: it-tools
-8. Configure environment variables if needed
-9. Click **"Deploy the stack"**
+1. Go to **Stacks** → **Add stack** → **Repository** in Portainer
+2. Choose your connected repository
+3. **Repository reference**: main (or your branch)
+4. **Compose path**: `apps/it-tools/docker-compose.yml`
+5. **Stack name**: it-tools
+6. Configure environment variables if needed
+7. Click **"Deploy the stack"**
 
 #### Option B: Using GitOps Edge Stacks (Recommended)
 
@@ -91,7 +101,7 @@ A collection of useful IT tools in a web interface.
    - **Deployment**: Choose deployment settings
 4. Click **"Create Edge Stack"**
 
-### Step 6: Configure Automatic Updates
+### Step 7: Configure Automatic Updates
 
 #### Using Webhooks (Instant Updates):
 
@@ -115,7 +125,6 @@ Copy `apps/it-tools/.env.example` to `apps/it-tools/.env` and customize:
 - `PORT`: Port to expose the service (default: 8080)
 - `PUID/PGID`: User/Group IDs for file permissions
 - `DATA_PATH`: Path for persistent data
-- `NETWORK_NAME`: Docker network name
 
 ## Best Practices
 

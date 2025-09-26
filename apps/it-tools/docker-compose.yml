@@ -13,8 +13,8 @@ services:
     volumes:
       - ./data:/app/data
     networks:
-      - portainer_default
+      - portainer-apps
 
 networks:
-  portainer_default:
+  portainer-apps:
     external: true
