@@ -1,0 +1,20 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    restart: unless-stopped
+    ports:
+      - "${JELLYFIN_PORT:-8096}:8096"
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-Europe/London}
+    volumes:
+      - ${JELLYFIN_CONFIG_PATH:-./config}:/config
+      - ${JELLYFIN_MEDIA_PATH:-/Public/media}:/media
+    networks:
+      - portainer-apps
+
+networks:
+  portainer-apps:
+    external: true
