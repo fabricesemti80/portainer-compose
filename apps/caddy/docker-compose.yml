@@ -14,7 +14,7 @@ services:
     volumes:
       - ./caddy-data:/data
       - ./caddy-config:/config
-      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./Caddyfile:/srv/Caddyfile:ro
     networks:
       - portainer-apps
 
