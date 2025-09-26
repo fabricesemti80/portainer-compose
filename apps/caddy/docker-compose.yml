@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   caddy:
-    image: caddy:2
+    image: lucaslorentz/caddy-docker-proxy:ci-alpine
     container_name: caddy
     restart: unless-stopped
     cap_add:
@@ -12,8 +12,7 @@ services:
       - "443:443"
       - "443:443/udp"
     environment:
-      - CADDY_DOCKER_SOCK_PATH=/var/run/docker.sock
-      - CADDY_TLS_INTERNAL=1
+      - CADDY_DOCKER_CADDYFILE_PATH=/etc/caddy/Caddyfile
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./caddy-data:/data
