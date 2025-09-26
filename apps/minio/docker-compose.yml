@@ -6,7 +6,7 @@ services:
     container_name: minio
     ports:
       - "9000:9000"
-      - "9001:9001"
+      - "10001:9001"
     restart: unless-stopped
     environment:
       - MINIO_ROOT_USER=${MINIO_ROOT_USER}
