@@ -1,20 +1,37 @@
-services:
-  jellyfin:
-    image: jellyfin/jellyfin:latest
-    container_name: jellyfin
-    restart: unless-stopped
-    ports:
-      - "${JELLYFIN_PORT:-8096}:8096"
-    environment:
-      - PUID=${PUID:-1000}
-      - PGID=${PGID:-1000}
-      - TZ=${TZ:-Europe/London}
-    volumes:
-      - ${JELLYFIN_CONFIG_PATH:-./config}:/config
-      - ${JELLYFIN_MEDIA_PATH:-/Public/media}:/media
-    networks:
-      - portainer-apps
-
 networks:
+  # Create this network outside of the stack
   portainer-apps:
     external: true
+
+services:
+  jellyfin:
+    container_name: jellyfin # Name of the container, helpful for identification.
+    image: jellyfin/jellyfin:latest # Docker image for Jellyfin.
+    hostname: jellyfin # Hostname assigned to the container, matching the container name.
+    ports:
+      - ${JELLYFIN_PORT:-8096}:8096 # Web interface and player communication.
+    environment:
+      - PUID=${PUID:-1000} # User ID for the container to match the host system permissions.
+      - PGID=${PGID:-1000} # Group ID for the container to match the host system permissions.
+      - TZ=${TZ:-Europe/London} # Time zone setting, e.g., "Europe/London".
+    volumes:
+      - type: bind
+        source: ${JELLYFIN_CONFIG_PATH:-./config} # Path on the host for Jellyfin configuration data.
+        target: /config # Path in the container for configuration data.
+      - type: bind
+        source: ${JELLYFIN_MEDIA_PATH:-/Public/media} # Path on the host for media files.
+        target: /media # Path in the container for media files.
+    devices:
+      - /dev/dri:/dev/dri # Enable hardware acceleration by mapping the host's Direct Rendering Infrastructure (DRI) device.
+    deploy:
+      resources:
+        limits:
+          memory: 4096M # Maximum memory allocation for the container.
+        reservations:
+          memory: "1073741824" # Memory reservation for the container (1GB).
+    restart: unless-stopped # Always restart unless the container is explicitly stopped.
+    cpu_shares: 90 # CPU weight for the container, influencing relative CPU access.
+    privileged: false # Run the container with minimal privileges for better security.
+
+    networks:
+      - portainer-apps
